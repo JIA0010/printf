@@ -6,34 +6,38 @@
 /*   By: cjia <cjia@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:35:47 by cjia              #+#    #+#             */
-/*   Updated: 2023/07/18 15:21:55 by cjia             ###   ########.fr       */
+/*   Updated: 2023/07/19 15:42:11 by cjia             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	printout(unsigned int nb)
+static int	ft_unsignedintlen(unsigned int nb)
 {
-	if (nb > 9)
-		printf_u(nb / 10);
-	if (nb <= 9)
+	int	len;
+
+	len = 0;
+	if (nb == 0)
+		return (1);
+	while (nb > 0)
 	{
-		ft_putchar_fd(nb + 48, 1);
-		return ;
+		nb /= 10;
+		len++;
 	}
-	ft_putchar_fd((nb % 10) + 48, 1);
+	return (len);
 }
 
 int	printf_u(unsigned int nb)
 {
-	unsigned int	i;
+	unsigned int	n;
 
-	printout(nb);
-	i = 1;
-	while (nb > 9)
+	n = nb;
+	if (n >= 10)
 	{
-		nb = nb / 10;
-		i++;
+		printf_u(n / 10);
+		printf_u(n % 10);
 	}
-	return (i);
+	else
+		printf_c(n + '0');
+	return (ft_unsignedintlen(nb));
 }

@@ -6,7 +6,7 @@
 /*   By: cjia <cjia@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:03:15 by cjia              #+#    #+#             */
-/*   Updated: 2023/07/19 15:20:15 by cjia             ###   ########.fr       */
+/*   Updated: 2023/07/22 10:19:02 by cjia             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ static int	check_args(const char *input, va_list arg)
 	else if (*input == 's')
 		i += printf_s(va_arg(arg, char *));
 	else if (*input == 'p')
-		i += printf_p(va_arg(arg, unsigned long), 87);
+		i += printf_p(va_arg(arg, uintptr_t));
 	else if (*input == 'd' || *input == 'i')
 		i += printf_i(va_arg(arg, int));
 	else if (*input == 'u')
 		i += printf_u(va_arg(arg, unsigned int));
 	else if (*input == 'x')
-		i += printf_hex(va_arg(arg, unsigned long), 87);
+		i += lowercase_hex(va_arg(arg, unsigned int));
 	else if (*input == 'X')
-		i += printf_hex(va_arg(arg, unsigned long), 55);
+		i += uppercase_hex(va_arg(arg, unsigned int));
 	return (i);
 }
 

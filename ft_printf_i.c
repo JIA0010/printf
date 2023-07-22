@@ -6,7 +6,7 @@
 /*   By: cjia <cjia@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:35:16 by cjia              #+#    #+#             */
-/*   Updated: 2023/07/19 15:18:41 by cjia             ###   ########.fr       */
+/*   Updated: 2023/07/22 09:56:00 by cjia             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,3 @@ int	printf_i(int n)
 		return (11);
 	return (i);
 }
-
-// int	main(void)
-// {
-// 	int number = -2147483648;
-// 	int num_characters = printf_i(number);
-
-// 	printf("\nNumber of characters printed: %d\n", num_characters);
-
-// 	return (0);
-// }

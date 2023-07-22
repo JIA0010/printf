@@ -6,55 +6,51 @@
 /*   By: cjia <cjia@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:34:40 by cjia              #+#    #+#             */
-/*   Updated: 2023/07/19 15:44:34 by cjia             ###   ########.fr       */
+/*   Updated: 2023/07/22 09:55:10 by cjia             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*create_str(unsigned int value, int *strlen)
+static int	ft_hexlen(unsigned int nb)
 {
-	size_t			i;
-	unsigned int	temp;
-	char			*str;
+	int	len;
 
-	i = 0;
-	temp = value;
-	while (temp != 0)
+	len = 0;
+	if (nb == 0)
+		return (1);
+	while (nb > 0)
 	{
-		temp = temp / 16;
-		i++;
+		nb /= 16;
+		len++;
 	}
-	str = ft_calloc(i + 1, sizeof(char));
-	*strlen = i - 1;
-	return (str);
+	return (len);
 }
 
-int	printf_hex(unsigned int value, int asc)
+int	lowercase_hex(unsigned int nb)
 {
-	unsigned int	temp_val;
-	char			*printout;
-	int				str_len;
-	int				*len_ptr;
+	unsigned int	n;
 
-	len_ptr = &str_len;
-	temp_val = value;
-	printout = create_str(value, len_ptr);
-	if (!printout)
-		return (0);
-	while (temp_val != 0)
+	n = nb;
+	while (nb >= 16)
 	{
-		if ((temp_val % 16) < 10)
-			printout[str_len] = (temp_val % 16) + 48;
-		else
-			printout[str_len] = (temp_val % 16) + asc;
-		temp_val = temp_val / 16;
-		str_len--;
+		lowercase_hex(nb / 16);
+		nb %= 16;
 	}
-	ft_putstr_fd(printout, 1);
-	str_len = ft_strlen(printout);
-	free(printout);
-	if (value == 0)
-		str_len += printf_c('0');
-	return (str_len);
+	printf_c("0123456789abcdef"[nb]);
+	return (ft_hexlen(n));
+}
+
+int	uppercase_hex(unsigned int nb)
+{
+	unsigned int	n;
+
+	n = nb;
+	while (nb >= 16)
+	{
+		uppercase_hex(nb / 16);
+		nb %= 16;
+	}
+	printf_c("0123456789ABCDEF"[nb]);
+	return (ft_hexlen(n));
 }

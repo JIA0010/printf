@@ -6,55 +6,38 @@
 /*   By: cjia <cjia@student.42tokyo.jp>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:16:43 by cjia              #+#    #+#             */
-/*   Updated: 2023/07/19 15:54:22 by cjia             ###   ########.fr       */
+/*   Updated: 2023/07/22 10:32:09 by cjia             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char	*create_str(unsigned long value, int *strlen)
+static void	print_ptr(uintptr_t nb)
 {
-	int				i;
-	unsigned long	temp;
-	char			*str;
-
-	i = 0;
-	temp = value;
-	while (temp != 0)
+	while (nb >= 16)
 	{
-		temp = temp / 16;
-		i++;
+		rec_ptr(nb / 16);
+		nb %= 16;
 	}
-	str = ft_calloc(i + 1, sizeof(char));
-	*strlen = i - 1;
-	return (str);
+	lowercase_hex(nb);
 }
 
-int	printf_p(unsigned long value, int asc)
+int	printf_p(uintptr_t nb)
 {
-	unsigned long	temp_val;
-	char			*printout;
-	int				str_len;
-	int				*len_ptr;
+	int	len;
 
-	len_ptr = &str_len;
-	temp_val = value;
-	printout = create_str(value, len_ptr);
-	if (!printout)
-		return (0);
-	while (temp_val != 0 && str_len-- >= 0)
+	len = 0;
+	write(1, "0x", 2);
+	rec_ptr(nb);
+	if (nb == 0)
+		len = 1;
+	else
 	{
-		if ((temp_val % 16) < 10)
-			printout[str_len + 1] = (temp_val % 16) + 48;
-		else
-			printout[str_len + 1] = (temp_val % 16) + asc;
-		temp_val = temp_val / 16;
+		while (nb > 0)
+		{
+			nb /= 16;
+			len++;
+		}
 	}
-	str_len = ft_strlen(printout);
-	str_len = str_len + printf_s("0x");
-	ft_putstr_fd(printout, 1);
-	free(printout);
-	if (value == 0)
-		str_len += printf_c('0');
-	return (str_len);
+	return (len + 2);
 }

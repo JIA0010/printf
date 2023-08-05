@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static void	print_ptr(uintptr_t nb)
+static void	rec_ptr(uintptr_t nb)
 {
 	while (nb >= 16)
 	{

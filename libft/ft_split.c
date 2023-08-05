@@ -38,7 +38,7 @@ static char	*make_word(char const *s, size_t len)
 	char	*word;
 
 	word = (char *)malloc(sizeof(char) * (len + 1));
-	if (word == '\0')
+	if (word == NULL)
 		return (NULL);
 	ft_strlcpy(word, s, len + 1);
 	return (word);
